@@ -2,6 +2,6 @@
 
 <center>Fun Project wit Pokemon API</center>
 <p align="center">
-  <img src="https://github.com/Mus9617/Api-Pokemon/raw/main/assets/img/pikachu.png" alt="Pikachu">
+  <img    height=450px  widith=450px     src="https://github.com/Mus9617/Api-Pokemon/raw/main/assets/img/pikachu.png" alt="Pikachu" >
 </p>
 
