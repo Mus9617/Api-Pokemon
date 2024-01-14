@@ -1,0 +1,26 @@
+body{
+  background: burlywood;
+}
+.pagina{
+  display:flex;
+  justify-content:space-around;
+  font-family:sans-serif;
+}
+.pagina span{
+  color:white;
+  margin-top:100px;
+  font-size:34px;
+}
+.tarjeta{
+  padding:10px;
+  border-radius:25px;
+  border:1px solid gray;
+  text-align:center;
+}
+.tarjeta label{
+  text-transform:capitalize;
+}
+.tarjeta img{
+  height:256px;
+  width:256px;
+}
