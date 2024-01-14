@@ -1,50 +1,53 @@
-//https://pokeapi.co/api/v2/pokemon/5
 let contenedor;
 const total_pokemons = 500;
-
 window.onload = inicio;
 
-function aleatorio(min, max) { // min and max included 
-  return Math.floor(Math.random() * (max - min + 1) + min)
+async function aleatorio(min, max) { 
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function inicio()
-{
+async function inicio() {
   contenedor = document.getElementById("vitrina");
-  window.addEventListener("click",pintarVitrina);
+  window.addEventListener("click", pintarVitrina);
 }
 
-function pintarVitrina(evento){
+async function pintarVitrina(evento) {
   contenedor.innerHTML = "";
-  traerDatos(aleatorio(1,total_pokemons));
-  traerDatos(aleatorio(1,total_pokemons));
-  traerDatos(aleatorio(1,total_pokemons));
-  traerDatos(aleatorio(1,total_pokemons));
-  traerDatos(aleatorio(1,total_pokemons));
-}
-
-function traerDatos(id){
-  fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  .then(response => response.json())
-  .then(function(data){
-    let nombre = data.name;
-    let url = data.sprites.other.dream_world.front_default;
-    if(nombre && url)
-    {
-        imprimirTarjeta(nombre,url);
+  for (let i = 0; i < 5; i++) {
+    const id = await aleatorio(1, total_pokemons);
+    const data = await traerDatos(id);
+    if (data) {
+      const nombre = data.name;
+      const url = data.sprites.other.dream_world.front_default;
+      const stats = data.stats;
+      imprimirTarjeta(nombre, url, stats);
     }
-  });
+  }
 }
 
-function imprimirTarjeta(nombre,url)
-{
+async function traerDatos(id) {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function imprimirTarjeta(nombre, url, stats) {
   let template = `<div class="tarjeta">
-  <img src="${url}" alt="" >
+    <img src="${url}" alt="" >
     <br>
     <label for="">
       ${nombre}
     </label> <br>
-    <a href="">Voir plus...</a>
+    <label for="">
+      Stats:
+      <ul>
+        ${stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
+      </ul>
+    </label>
   </div>`;
   contenedor.innerHTML += template;
 }
